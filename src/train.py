@@ -67,4 +67,5 @@ plt.tight_layout()
 plt.show()
 
 # Lưu weights
-model.save('audio_recog_cnn.h5')
+# model.save('audio_recog_cnn.h5')
+model.save('audio_recog_cnn.keras')
