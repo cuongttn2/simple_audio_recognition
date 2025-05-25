@@ -7,6 +7,7 @@ import tensorflow as tf
 
 # Bước 2: Download dataset
 
+# Comment lại khi train cho câu lệnh riêng =====>
 # Đường dẫn và URL dataset
 DATA_DIR = 'data'
 DATASET_NAME = 'mini_speech_commands'
@@ -34,15 +35,39 @@ if not os.path.isdir(dataset_path):
 else:
     print(f"Directory '{dataset_path}' already exists, skipping download.")
 
+# Comment lại khi train cho câu lệnh riêng <=====
+
+# Dùng code sau để train câu lệnh riêng ==>
+# KEYWORDS = ['hello', 'bye']
+# DATA_DIR = 'data/commands' # thư mục customize câu lệnh riêng ('hello', 'bye')
+
 # Bước 3: Tạo train/val sets
+
+# Comment lại khi train cho câu lệnh riêng =====>
 train_ds, val_ds = tf.keras.utils.audio_dataset_from_directory(
     directory=dataset_path,
     batch_size=16,
     validation_split=0.2,
     output_sequence_length=16000,
+# Set the seed value for experiment reproducibility.
     seed=0,
     subset='both'
 )
+# Comment lại khi train cho câu lệnh riêng <=====
+
+# Dùng code sau để train câu lệnh riêng ==>
+# train_ds, val_ds = tf.keras.utils.audio_dataset_from_directory(
+#     directory=DATA_DIR,
+#     labels='inferred',
+#     label_mode='int',
+#     class_names=KEYWORDS,
+#     batch_size=16,
+#     validation_split=0.2,
+#     subset='both',
+#     seed=42,
+#     output_sequence_length=16000
+# )
+
 label_names = np.array(train_ds.class_names)
 print("Labels:", label_names)
 
