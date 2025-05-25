@@ -21,9 +21,14 @@ if not os.path.isdir(dataset_path):
     zip_path = os.path.join(DATA_DIR, ZIP_NAME)
     print(f"Downloading {ZIP_URL} to '{zip_path}'...")
     urllib.request.urlretrieve(ZIP_URL, zip_path)
-    print("Extracting zip file into data directory...")
+    print("Extracting zip file into data directory (skipping macOS metadata)...")
     with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-        zip_ref.extractall(DATA_DIR)
+        for member in zip_ref.infolist():
+            filename = member.filename
+            # Bỏ qua thư mục __MACOSX và file .DS_Store
+            if filename.startswith('__MACOSX') or os.path.basename(filename) == '.DS_Store':
+                continue
+            zip_ref.extract(member, DATA_DIR)
     os.remove(zip_path)
     print(f"Dataset extracted to '{dataset_path}'.")
 else:
