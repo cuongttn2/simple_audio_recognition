@@ -71,6 +71,9 @@ train_ds, val_ds = tf.keras.utils.audio_dataset_from_directory(
 label_names = np.array(train_ds.class_names)
 print("Labels:", label_names)
 
+with open("labels.txt", "w") as f:
+    for label in train_ds.class_names:
+        f.write(label + "\n")
 
 # Squeeze extra channel
 def squeeze(audio, labels):
